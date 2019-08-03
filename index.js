@@ -2,7 +2,10 @@ const fetch = require("node-fetch");
 
 async function main(params) {
   let auth = 'Basic ' + new Buffer(params.credentials.username + ':' + params.credentials.password).toString('base64');
-  let apiUrl = 'https://api.fastspring.com';
+  let fastspringApi = 'https://api.fastspring.com';
+  let exchangeratesApi = 'https://api.exchangeratesapi.io';
+  let baseCurrency = params.settings.base_currency ? params.settings.base_currency : 'USD';
+  let currencies = params.settings.currencies ? params.settings.currencies : ['USD'];
 
   let authHheaders = {
     "Content-Type": "application/json",
@@ -14,12 +17,17 @@ async function main(params) {
   }
 
   try {
-    const response1 = await fetch('https://api.exchangeratesapi.io/latest?base=USD', {method:'GET', headers: headers });
-    const json1 = await response1.json();
-    console.log(json1);
-    const response2 = await fetch(apiUrl + '/products/scanner-vibrato', {method:'GET', headers: authHheaders });
+    const response1 = await fetch( exchangeratesApi + '/latest?base=' + baseCurrency, {method:'GET', headers: headers });
+    const exchangerates = await response1.json();
+    console.log(exchangerates);
+    const response2 = await fetch(fastspringApi + '/products/scanner-vibrato', {method:'GET', headers: authHheaders });
     const json2 = await response2.json();
+    basePrice = json2.products[0].pricing.price[baseCurrency];
+    for (let currency of currencies) {
+      console.log(currency, basePrice * exchangerates.rates[currency]);
+    }
     console.log(json2);
+    console.log(json2.products[0]);
   } catch (error) {
     console.log(error);
   }
