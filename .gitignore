@@ -1,0 +1,13 @@
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# compiled output
+openwhisk-fastspring-classic-gross-pricing-mode.zip
+
+# dependencies
+/node_modules
+
+# misc
+npm-debug.log
+
+# config
+params.json

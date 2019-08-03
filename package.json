@@ -1,0 +1,22 @@
+{
+  "name": "openwhisk-fastspring-classic-gross-pricing-mode",
+  "version": "0.1.0-alpha.1",
+  "main": "index.js",
+  "author": "Martin Broerse",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/martinic/openwhisk-fastspring-classic-gross-pricing-mode.git"
+  },
+  "keywords": [
+    "openwhisk-package",
+    "OpenWhisk",
+    "FastSpring"
+  ],
+  "scripts": {
+    "zip": "bestzip openwhisk-fastspring-classic-gross-pricing-mode.zip node_modules index.js package.json",
+    "create": "npm run zip && wsk action create openwhisk-fastspring-classic-gross-pricing-mode --kind nodejs:default openwhisk-fastspring-classic-gross-pricing-mode.zip",
+    "update": "npm run zip && wsk action update openwhisk-fastspring-classic-gross-pricing-mode --kind nodejs:default openwhisk-fastspring-classic-gross-pricing-mode.zip",
+    "invoke": "wsk action invoke --blocking --result openwhisk-fastspring-classic-gross-pricing-mode --param-file params.json"
+  }
+}
