@@ -20,7 +20,7 @@ json input (`params.json`)
 {
   "credentials": {
     "username": "API_credentials_username",
-    "password": "API_credentials_password",
+    "password": "API_credentials_password"
   },
   "settings":{
     "price_decoration": false

@@ -18,5 +18,8 @@
     "create": "npm run zip && wsk action create openwhisk-fastspring-classic-gross-pricing-mode --kind nodejs:default openwhisk-fastspring-classic-gross-pricing-mode.zip",
     "update": "npm run zip && wsk action update openwhisk-fastspring-classic-gross-pricing-mode --kind nodejs:default openwhisk-fastspring-classic-gross-pricing-mode.zip",
     "invoke": "wsk action invoke --blocking --result openwhisk-fastspring-classic-gross-pricing-mode --param-file params.json"
+  },
+  "dependencies": {
+    "node-fetch": "^2.6.0"
   }
 }
