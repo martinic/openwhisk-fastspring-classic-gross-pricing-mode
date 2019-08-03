@@ -21,6 +21,8 @@ or with node.js
 
 ## config
 
+COB & CLP currency rates are not supported by the European Central Bank yet.
+
 json input (`params.json`)
 ```
 {
@@ -31,7 +33,7 @@ json input (`params.json`)
   "settings":{
     "price_decoration": false,
     "base_currency": "USD",
-    "currencies": ["JPY","CNY","SGD","CZK","HKD","MXN","COP","CAD","ZAR","NZD","AUD","CLP","GBP","DKK","SEK","BRL","CHF","EUR","RUB","PLN","INR","USD","KRW"]
+    "currencies": ["JPY","CNY","SGD","CZK","HKD","MXN","CAD","ZAR","NZD","AUD","GBP","DKK","SEK","BRL","CHF","EUR","RUB","PLN","INR","USD","KRW"]
   }
 }
 ```

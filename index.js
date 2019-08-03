@@ -20,14 +20,50 @@ async function main(params) {
     const response1 = await fetch( exchangeratesApi + '/latest?base=' + baseCurrency, {method:'GET', headers: headers });
     const exchangerates = await response1.json();
     console.log(exchangerates);
-    const response2 = await fetch(fastspringApi + '/products/scanner-vibrato', {method:'GET', headers: authHheaders });
-    const json2 = await response2.json();
-    basePrice = json2.products[0].pricing.price[baseCurrency];
-    for (let currency of currencies) {
-      console.log(currency, basePrice * exchangerates.rates[currency]);
+    const response2 = await fetch(fastspringApi + '/products', {method:'GET', headers: authHheaders });
+    const products = await response2.json();
+    for (let productId of products.products) {
+      console.log(productId);
+      const response3 = await fetch(fastspringApi + '/products/' + productId, {method:'GET', headers: authHheaders });
+      const product = await response3.json();
+      basePrice = product.products[0].pricing.price[baseCurrency];
+      for (let currency of currencies) {
+        if (exchangerates.rates[currency]) {
+          let value =  (basePrice * exchangerates.rates[currency]).toFixed(2);
+          if (params.settings.price_decoration) {
+            let [roundBase, centsBase] = basePrice.toFixed(2).split(".");
+            let [roundValue, centsValue] = value.split(".");
+            if (centsValue > centsBase ) {
+              roundValue++;
+            }
+            value = roundValue + '.' + centsBase;
+          }
+          console.log(currency, value);
+          product.products[0].pricing.price[currency] = value;
+        }
+      }
+      if (!product.products[0].pricing.quantityDiscounts) {
+        product.products[0].pricing.quantityDiscounts = {};
+      }
+      if (!product.products[0].pricing.quantityDiscounts[product.products[0].pricing.quantityDefault]) {
+        product.products[0].pricing.quantityDiscounts[product.products[0].pricing.quantityDefault] = 0;
+      }
+      delete product.products[0].action;
+      delete product.products[0].result;
+      delete product.products[0].parent;
+      delete product.products[0].fulfillments;
+
+      delete product.products[0].pricing.cancellation;
+      delete product.products[0].pricing.dateLimitsEnabled;
+
+      console.log(JSON.stringify(product, null, 2));
+  //    console.log(product.products[0]);
+
+      const response4 = await fetch(fastspringApi + '/products/' + productId, {method:'POST', headers: authHheaders, body: JSON.stringify(product)});
+      const result = await response4.json();
+      console.log(result.products[0]);
     }
-    console.log(json2);
-    console.log(json2.products[0]);
+
   } catch (error) {
     console.log(error);
   }
