@@ -20,6 +20,6 @@
     "invoke": "wsk action invoke --blocking --result openwhisk-fastspring-classic-gross-pricing-mode --param-file params.json"
   },
   "dependencies": {
-    "node-fetch": "^2.6.0"
+    "node-fetch": "^2.6.1"
   }
 }
