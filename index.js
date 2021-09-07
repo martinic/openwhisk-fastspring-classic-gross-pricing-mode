@@ -3,9 +3,10 @@ const fetch = require("node-fetch");
 async function main(params) {
   let auth = 'Basic ' + new Buffer(params.credentials.username + ':' + params.credentials.password).toString('base64');
   let fastspringApi = 'https://api.fastspring.com';
-  let exchangeratesApi = 'https://api.exchangeratesapi.io';
+  let exchangeratesApi = 'https://api.exchangeratesapi.io/v1';
   let baseCurrency = params.settings.base_currency ? params.settings.base_currency : 'USD';
   let currencies = params.settings.currencies ? params.settings.currencies : ['USD'];
+  let access_key=params.credentials.access_key; // http://api.exchangeratesapi.io
 
   let authHheaders = {
     "Content-Type": "application/json",
@@ -17,7 +18,7 @@ async function main(params) {
   }
 
   try {
-    const response1 = await fetch( exchangeratesApi + '/latest?base=' + baseCurrency, {method:'GET', headers: headers });
+    const response1 = await fetch( exchangeratesApi + '/latest?access_key=' + access_key + '&base=' + baseCurrency, {method:'GET', headers: headers });
     const exchangerates = await response1.json();
     console.log('exchangerates: ', exchangerates);
     const response2 = await fetch(fastspringApi + '/products', {method:'GET', headers: authHheaders });

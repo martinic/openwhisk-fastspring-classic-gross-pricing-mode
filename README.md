@@ -23,12 +23,16 @@ or with node.js
 
 COB & CLP currency rates are not supported by the European Central Bank yet.
 
+FastSpring:  username/password
+exchangeratesapi.io: access_key for paid account
+
 json input (`params.json`)
 ```
 {
   "credentials": {
     "username": "NVC9SLWFTU-NJYEB9DIUSW",
-    "password": "BXpeGA_aQVmm9zXLP_YwEQ"
+    "password": "BXpeGA_aQVmm9zXLP_YwEQ",
+    "access_key": "f25ca0cd88590a81bcbb476d08da89bd"
   },
   "settings":{
     "price_decoration": false,
