@@ -42,6 +42,8 @@ async function main(params) {
       Object.assign(productUpdate.products[0].pricing, product.products[0].pricing);
       productUpdate.products[0].product = product.products[0].product;
       productUpdate.products[0].display = product.products[0].display;
+      delete productUpdate.products[0].pricing.cancellation;
+      delete productUpdate.products[0].pricing.dateLimitsEnabled;
       if (!productUpdate.products[0].pricing.quantityDiscounts) {
         productUpdate.products[0].pricing.quantityDiscounts = {};
       }
